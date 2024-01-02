@@ -1,4 +1,10 @@
-import { TextInput, View, Text, Button, TouchableOpacity } from 'react-native';
+import { 
+  TextInput, 
+  View, 
+  Text, 
+  TouchableOpacity,
+  Vibration,
+} from 'react-native';
 import ResultImc from './ResultImc';
 import { useState } from 'react';
 import styles from './style';
@@ -6,9 +12,10 @@ import styles from './style';
 export default function Form() {
   const [height, setHeight] = useState(null);
   const [weight, setWeight] = useState(null);
-  const [messageImc, setmessageImc] = useState('Preencha o peso a a altura');
+  const [messageImc, setMessageImc] = useState('Preencha o peso a a altura');
   const [imc, setImc] = useState(null);
   const [textButton, setTextButton] = useState('Calcular');
+  const [errorMessage, setErrorMessage] = useState(null);
 
   function imcCalculator() {
     return setImc((weight / (height * height)).toFixed(2));
@@ -19,19 +26,30 @@ export default function Form() {
       imcCalculator();
       setHeight(null);
       setWeight(null);
-      setmessageImc('Seu imc é igual: ');
+      setMessageImc('Seu imc é igual: ');
       setTextButton('Calcular novamente');
+      setErrorMessage(null);
       return 
     }
+    verificationImc();
     setImc(null);
     setTextButton('Calcular');
-    setmessageImc('Preencha o peso a a altura');
+    setMessageImc('Preencha o peso a a altura');
+  }
+
+  function verificationImc() {
+    if (imc == null) {
+      Vibration.vibrate();
+      setErrorMessage('Campo obrigatório*');
+      return;
+    }
   }
 
   return (
     <View style={styles.formContext}>
       <View style={styles.form}>
         <Text style={styles.formLabel}>Altura</Text>
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
           <TextInput 
           style={styles.input}
           placeholder='Ex. 1.80' 
@@ -40,6 +58,7 @@ export default function Form() {
           value={height}
           />
         <Text style={styles.formLabel}>Peso</Text>
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
           <TextInput 
           style={styles.input}
           placeholder='Ex. 82.58 ' 
