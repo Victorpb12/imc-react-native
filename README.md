@@ -15,7 +15,7 @@ Este aplicativo foi desenvolvido para calcular o IMC com base no peso e na altur
 ## Instalação
 
 1. Clone este repositório: `https://github.com/Victorpb12/imc-react-native.git`
-2. Entre na pasta do projeto: `cd app-imc-react-native`
+2. Entre na pasta do projeto: `cd imc-react-native`
 3. Instale as dependências: `npm install` ou `yarn install`
 4. Inicie o aplicativo: `npm start` ou `yarn start`
 
